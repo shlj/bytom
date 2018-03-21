@@ -4,4 +4,3 @@
 void cxxFoo::Bar(void) {
 	std::cout<<this->a<<std::endl;
 }
-
