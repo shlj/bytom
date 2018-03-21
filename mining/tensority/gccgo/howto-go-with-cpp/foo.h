@@ -10,7 +10,7 @@ extern "C" {
 	Foo FooInit(void);
 	void FooFree(Foo);
 	void FooBar(Foo);
-	void get(uint8_t*);
+	uint8_t *get(uint8_t *);
 
 #ifdef __cplusplus
 }
