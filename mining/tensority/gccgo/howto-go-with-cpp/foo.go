@@ -5,6 +5,11 @@ package main
 // #include "foo.h"
 import "C"
 
+import(
+	"fmt"
+	"unsafe"
+)
+
 type GoFoo struct {
 	foo C.Foo
 }
@@ -49,7 +54,9 @@ func main() {
 				0x39, 0x41, 0x6c, 0x7e, 0x6f, 0x8d, 0xf2, 0x27,
 			}
 
-	C.get(&blockHeader[0])
+	a := (*[32]C.uchar)(unsafe.Pointer(C.get(&blockHeader[0])))
 	C.get(&seed[0])
 	C.get(&hash[0])
+
+	fmt.Println(*a)
 }
