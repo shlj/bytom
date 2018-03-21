@@ -1,6 +1,6 @@
 package main
 
-// #cgo LDFLAGS: -L .
+// #cgo LDFLAGS: -L . -lstdc++
 // #cgo CFLAGS: -I ./
 // #include "foo.h"
 import "C"
@@ -22,7 +22,7 @@ func (f GoFoo) Bar() {
 }
 
 func main() {
-	// foo := New()
-	// foo.Bar()
-	// foo.Free()
+	foo := New()
+	foo.Bar()
+	foo.Free()
 }
