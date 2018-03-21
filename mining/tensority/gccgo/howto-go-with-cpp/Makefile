@@ -1,9 +1,9 @@
 .PHONY: clean
 
-TARGET=howto-go-with-cpp
+TARGET=tensority
 
 $(TARGET): libfoo.a
-	go build .
+	go build -o $(TARGET)
 
 libfoo.a: foo.o cfoo.o
 	ar r $@ $^
