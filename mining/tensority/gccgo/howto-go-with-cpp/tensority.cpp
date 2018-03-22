@@ -1,24 +1,8 @@
 #include <iostream>
 #include <cstdio>
-#include "foo.hpp"
-#include "foo.h"
+#include "tensority.h"
 #include "BytomPoW.h"
 #include "seed.h"
-
-Foo FooInit() {
-	cxxFoo * ret = new cxxFoo(666);
-	return (void*)ret;
-}
-
-void FooFree(Foo f) {
-	cxxFoo * foo = (cxxFoo*)f;
-	delete foo;
-}
-
-void FooBar(Foo f) {
-	cxxFoo * foo = (cxxFoo*)f;
-	foo->Bar();
-}
 
 BytomMatList16* matList_int16;
 uint8_t result[32] = {0};

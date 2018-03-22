@@ -1,8 +1,8 @@
 package main
 
 // #cgo CFLAGS: -I.
-// #cgo LDFLAGS: -L. libfoo.a -lstdc++ 
-// #include "foo.h"
+// #cgo LDFLAGS: -L. -lts -lstdc++ 
+// #include "tensority.h"
 import "C"
 
 import(
@@ -10,24 +10,6 @@ import(
 	"unsafe"
 	"reflect"
 )
-
-type GoFoo struct {
-	foo C.Foo
-}
-
-func New() GoFoo {
-	var ret GoFoo
-	ret.foo = C.FooInit()
-	return ret
-}
-
-func (f GoFoo) Free() {
-	C.FooFree(f.foo)
-}
-
-func (f GoFoo) Bar() {
-	C.FooBar(f.foo)
-}
 
 func testHelper(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
 	bhPtr := (*C.uchar)(unsafe.Pointer(&blockHeader))
