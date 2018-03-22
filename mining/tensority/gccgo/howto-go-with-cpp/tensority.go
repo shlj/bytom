@@ -34,8 +34,9 @@ func testHelper(blockHeader [32]uint8, seed [32]uint8, hash [32]uint8) [32]uint8
 	seedPtr := (*C.uchar)(unsafe.Pointer(&seed))
 	hashPtr := (*C.uchar)(unsafe.Pointer(&hash))
 
-	resPtr := (*[32]uint8)(unsafe.Pointer(C.get(bhPtr, seedPtr, hashPtr)))
-	return *resPtr
+	resPtr := C.get(bhPtr, seedPtr, hashPtr)
+	res := *(*[32]uint8)(unsafe.Pointer(resPtr))
+	return res
 }
 
 func main() {
