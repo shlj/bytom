@@ -9,9 +9,10 @@ import(
 	"fmt"
 	"unsafe"
 	"reflect"
+	"time"
 )
 
-func testHelper(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
+func hash(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
 	bhPtr := (*C.uchar)(unsafe.Pointer(&blockHeader))
 	seedPtr := (*C.uchar)(unsafe.Pointer(&seed))
 
@@ -35,17 +36,24 @@ func main() {
 				0xc9, 0xf2, 0xdf, 0x53, 0xac, 0x67, 0x44, 0xd2,
 			}
 
-	hash := [32]uint8{
+	expected := [32]uint8{
 				0xe3, 0x5d, 0xa5, 0x47, 0x95, 0xd8, 0x2f, 0x85,
 				0x49, 0xc0, 0xe5, 0x80, 0xcb, 0xf2, 0xe3, 0x75,
 				0x7a, 0xb5, 0xef, 0x8f, 0xed, 0x1b, 0xdb, 0xe4,
 				0x39, 0x41, 0x6c, 0x7e, 0x6f, 0x8d, 0xf2, 0x27,
 			}
 
-	result := testHelper(blockHeader, seed)
+	start := time.Now()
 
-	if !reflect.DeepEqual(result, hash) {
-		fmt.Println("hash %d mismatch: is %x, while %x is expected", 0, result, hash)
+	result := hash(blockHeader, seed)
+
+
+	end := time.Now()
+
+	fmt.Println(end.Sub(start))
+
+	if !reflect.DeepEqual(result, expected) {
+		fmt.Printf("hash %d mismatch: gets %x, expects %x\n", 0, result, expected)
 	} else {
 		fmt.Println("PASS")
 	}
