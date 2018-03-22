@@ -32,4 +32,12 @@ static inline void extend(uint32_t* exted, uint8_t *g_seed){
     free(ctx);
 }
 
+static inline void init_seed(Words32 &seed, uint32_t _seed[32])
+{
+    for (int i = 0; i < 16; i++)
+        seed.lo.w[i] = _seed[i];
+    for (int i = 0; i < 16; i++)
+        seed.hi.w[i] = _seed[16 + i];
+}
+
 #endif
