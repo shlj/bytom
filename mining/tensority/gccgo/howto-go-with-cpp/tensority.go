@@ -30,13 +30,12 @@ func (f GoFoo) Bar() {
 }
 
 func testHelper(blockHeader [32]uint8, seed [32]uint8, hash [32]uint8) [32]uint8 {
-	// a := (*[32]C.uchar)(unsafe.Pointer(uintptr(int(reflect.ValueOf(blockHeader).Pointer()) - reflect.TypeOf(blockHeader).Align()*1)))
-	a := (*[32]C.uchar)(unsafe.Pointer(&blockHeader[0]))
-	b := (*[32]C.uchar)(unsafe.Pointer(&seed[0]))
-	C.get(&a[0])
-	C.get(&b[0])
+	bhPtr := (*C.uchar)(unsafe.Pointer(&blockHeader))
+	seedPtr := (*C.uchar)(unsafe.Pointer(&seed))
+	hashPtr := (*C.uchar)(unsafe.Pointer(&hash))
 
-	return hash
+	resPtr := (*[32]uint8)(unsafe.Pointer(C.get(bhPtr, seedPtr, hashPtr)))
+	return *resPtr
 }
 
 func main() {
