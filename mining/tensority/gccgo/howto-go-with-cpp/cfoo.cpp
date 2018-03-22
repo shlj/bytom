@@ -20,32 +20,19 @@ void FooBar(Foo f) {
 	foo->Bar();
 }
 
-
 BytomMatList16* matList_int16;
+uint8_t result[32] = {0};
 
-uint8_t *get(uint8_t blockheader[32], uint8_t seed[32], uint8_t result[32]){
-	printf("%s\n", "---------------");
-	for(int i=0; i<32; ++i) {
-		printf("0x%02x, ", blockheader[i]);
-	}
-	printf("\n%s\n", "---------------");
-	for(int i=0; i<32; ++i) {
-		printf("0x%02x, ", seed[i]);
-	}
-	printf("\n%s\n", "---------------");
+uint8_t *get(uint8_t blockheader[32], uint8_t seed[32]){
+    uint32_t exted[32];
+    extend(exted, seed); // extends seed to exted
+    Words32 extSeed;
+    init_seed(extSeed, exted);
 
+    matList_int16 = new BytomMatList16;
+    matList_int16->init(extSeed);
 
-        uint32_t exted[32];
-        extend(exted, seed);   // extends seed to exted
-        Words32 extSeed;
-        init_seed(extSeed, exted);
-
-        matList_int16 = new BytomMatList16;
-        matList_int16->init(extSeed);
-
-        iter_mineBytom(blockheader, 32, result);
-
-
+    iter_mineBytom(blockheader, 32, result);
 
 	return result;
 }
