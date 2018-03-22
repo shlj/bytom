@@ -1,14 +1,14 @@
 package main
 
 // #cgo CFLAGS: -I.
-// #cgo LDFLAGS: -L. -lfoo
+// #cgo LDFLAGS: -L. libfoo.a -lstdc++ 
 // #include "foo.h"
 import "C"
 
 import(
 	"fmt"
 	"unsafe"
-	// "reflect"
+	"reflect"
 )
 
 type GoFoo struct {
@@ -29,23 +29,16 @@ func (f GoFoo) Bar() {
 	C.FooBar(f.foo)
 }
 
-func testHelper(blockHeader [32]uint8, seed [32]uint8, hash [32]uint8) [32]uint8 {
+func testHelper(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
 	bhPtr := (*C.uchar)(unsafe.Pointer(&blockHeader))
 	seedPtr := (*C.uchar)(unsafe.Pointer(&seed))
-	hashPtr := (*C.uchar)(unsafe.Pointer(&hash))
 
-	resPtr := C.get(bhPtr, seedPtr, hashPtr)
+	resPtr := C.get(bhPtr, seedPtr)
 	res := *(*[32]uint8)(unsafe.Pointer(resPtr))
 	return res
 }
 
 func main() {
-	// foo := New()
-	// foo.Bar()
-	// foo.Free()
-
-
-
 	blockHeader := [32]uint8{
 				0xd0, 0xda, 0xd7, 0x3f, 0xb2, 0xda, 0xbf, 0x33,
 				0x53, 0xfd, 0xa1, 0x55, 0x71, 0xb4, 0xe5, 0xf6,
@@ -67,7 +60,11 @@ func main() {
 				0x39, 0x41, 0x6c, 0x7e, 0x6f, 0x8d, 0xf2, 0x27,
 			}
 
-	result := testHelper(blockHeader, seed, hash)
+	result := testHelper(blockHeader, seed)
 
-	fmt.Println(result)
+	if !reflect.DeepEqual(result, hash) {
+		fmt.Println("hash %d mismatch: is %x, while %x is expected", 0, result, hash)
+	} else {
+		fmt.Println("PASS")
+	}
 }
