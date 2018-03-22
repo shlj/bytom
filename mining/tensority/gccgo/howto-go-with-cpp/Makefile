@@ -26,5 +26,14 @@ libts.a: cSimdTs.so
 %.so: %.cpp
 	clang++ -shared -o $@ $^ -std=c++11 -pthread -mavx2 -O3 -fPIC
 
+# $(TARGET): libts.a
+# 	go build $(TARGET).go
+
+# libts.a: tensority.so sha3.so
+# 	ar rs $@ $^
+
+# %.so: %.cpp
+# 	clang++ -shared -o $@ $^ -std=c++11 -pthread -mavx2 -O3 -fPIC
+
 clean:
 	rm -f *.o *.so *.a $(TARGET)
