@@ -345,7 +345,7 @@ extern BytomMatList16* matList_int16;
 static inline void iter_mineBytom(
                         const uint8_t *fixedMessage,
                         uint32_t len,
-                        uint8_t nonce[8],
+                        // uint8_t nonce[8],
                         uint8_t result[32]) {
     Mat256x256i16 *mat16=new Mat256x256i16;
     Mat256x256i16 *tmp16=new Mat256x256i16;

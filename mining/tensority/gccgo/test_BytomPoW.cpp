@@ -128,14 +128,6 @@ static uint8_t g_golden_results[TEST_NUM][32] = {
     },
 };
 
-static void init_seed(Words32 &seed, uint32_t _seed[32])
-{
-    for (int i = 0; i < 16; i++)
-        seed.lo.w[i] = _seed[i];
-    for (int i = 0; i < 16; i++)
-        seed.hi.w[i] = _seed[16 + i];
-}
-
 int main(void)
 {
     clock_t start, end;
