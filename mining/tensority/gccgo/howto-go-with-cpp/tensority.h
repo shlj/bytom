@@ -1,15 +1,11 @@
-#ifndef _MY_PACKAGE_FOO_H_
-#define _MY_PACKAGE_FOO_H_
+#ifndef _TENSORITY_H_
+#define _TENSORITY_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 	#include <stdint.h>
 
-	typedef void* Foo;
-	Foo FooInit(void);
-	void FooFree(Foo);
-	void FooBar(Foo);
 	uint8_t *get(uint8_t blockheader[32], uint8_t seed[32]);
 
 #ifdef __cplusplus
