@@ -18,12 +18,16 @@ void FooBar(Foo f) {
 	foo->Bar();
 }
 
-uint8_t *get(uint8_t *in){
-
+uint8_t *get(uint8_t bh[32], uint8_t seed[32], uint8_t result[32]){
 	printf("%s\n", "---------------");
 	for(int i=0; i<32; ++i) {
-		printf("%02d: 0x%02x\n", i, *(in+i));
+		printf("0x%02x, ", bh[i]);
 	}
+	printf("\n%s\n", "---------------");
+	for(int i=0; i<32; ++i) {
+		printf("0x%02x, ", seed[i]);
+	}
+	printf("\n%s\n", "---------------");
 
-	return in;
+	return result;
 }
