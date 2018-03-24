@@ -1,39 +1,27 @@
 package main
 
+// #cgo CFLAGS: -I.
+// #cgo LDFLAGS: -lstdc++ -lts
+// #include "cSimdTs.h"
+import "C"
+
 import(
 	"fmt"
-	// "unsafe"
+	"unsafe"
 	"reflect"
 	"time"
-
-	"github.com/rainycape/dl"
 )
 
-// func Hash(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
-// 	bhPtr := (*C.uchar)(unsafe.Pointer(&blockHeader))
-// 	seedPtr := (*C.uchar)(unsafe.Pointer(&seed))
+func Hash(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
+	bhPtr := (*C.uchar)(unsafe.Pointer(&blockHeader))
+	seedPtr := (*C.uchar)(unsafe.Pointer(&seed))
 
-// 	resPtr := C.SimdTs(bhPtr, seedPtr)
-// 	res := *(*[32]uint8)(unsafe.Pointer(resPtr))
-// 	return res
-// }
+	resPtr := C.SimdTs(bhPtr, seedPtr)
+	res := *(*[32]uint8)(unsafe.Pointer(resPtr))
+	return res
+}
 
 func main() {
-
-
-
-	lib, err := dl.Open("cSimdTs", 0)
-	if err != nil {
-		panic(err)
-	}
-	defer lib.Close()
-	var SimdTs func([32]uint8,[32]uint8) [32]uint8 
-	if err := lib.Sym("SimdTs", &SimdTs); err != nil {
-		panic(err)
-	}
-
-
-
 	tests := []struct {
 		blockHeader [32]byte
 		seed        [32]byte
@@ -166,7 +154,7 @@ func main() {
 		fmt.Printf("Test case %d:\n", i+1)
 
 		sT := time.Now()
-		result := SimdTs(tt.blockHeader, tt.seed)
+		result := Hash(tt.blockHeader, tt.seed)
 		eT := time.Now()
 		fmt.Println("\tTotal verification time:", eT.Sub(sT))
 
