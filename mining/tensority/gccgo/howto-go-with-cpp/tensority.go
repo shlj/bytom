@@ -2,7 +2,7 @@ package main
 
 // #cgo CFLAGS: -I.
 // #cgo LDFLAGS: -L. -lts -lstdc++ 
-// #include "tensority.h"
+// #include "cSimdTs.h"
 import "C"
 
 import(

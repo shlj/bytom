@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstdio>
-#include "tensority.h"
+#include "cSimdTs.h"
 #include "BytomPoW.h"
 #include "seed.h"
 
