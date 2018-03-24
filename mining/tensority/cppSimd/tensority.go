@@ -1,4 +1,4 @@
-package tensority
+package main
 
 // #cgo CFLAGS: -I.
 // #cgo LDFLAGS: -lstdc++ -lts
