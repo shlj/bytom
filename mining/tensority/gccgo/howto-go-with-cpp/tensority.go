@@ -1,7 +1,7 @@
 package main
 
 // #cgo CFLAGS: -I.
-// #cgo LDFLAGS: -L. -lts -lstdc++ 
+// #cgo LDFLAGS: -lstdc++ libts.a
 // #include "cSimdTs.h"
 import "C"
 
