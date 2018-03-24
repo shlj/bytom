@@ -15,7 +15,7 @@ func Hash(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
 	bhPtr := (*C.uchar)(unsafe.Pointer(&blockHeader))
 	seedPtr := (*C.uchar)(unsafe.Pointer(&seed))
 
-	resPtr := C.get(bhPtr, seedPtr)
+	resPtr := C.SimdTs(bhPtr, seedPtr)
 	res := *(*[32]uint8)(unsafe.Pointer(resPtr))
 	return res
 }
