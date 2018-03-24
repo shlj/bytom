@@ -340,7 +340,8 @@ struct BytomMatList16 {
 };
 
 // extern BytomMatList8* matList_int8;
-extern BytomMatList16* matList_int16;
+// extern BytomMatList16* matList_int16;
+extern BytomMatList16 matList_int16;
 
 static inline void iter_mineBytom(
                         const uint8_t *fixedMessage,
@@ -366,9 +367,11 @@ static inline void iter_mineBytom(
             // equivalent as tmp=tmp*matlist, i+=1 
             for(int i=0; i<32; i+=2) {
                 // "mc = ma dot mb.T" in GoLang code
-                mat16->mul(*tmp16, matList_int16->at(sequence[i]));
+                // mat16->mul(*tmp16, matList_int16->at(sequence[i]));
+                mat16->mul(*tmp16, matList_int16.at(sequence[i]));
                 // "ma = mc" in GoLang code
-                tmp16->mul(*mat16, matList_int16->at(sequence[i+1]));
+                // tmp16->mul(*mat16, matList_int16->at(sequence[i+1]));
+                tmp16->mul(*mat16, matList_int16.at(sequence[i+1]));
             }
         }
         // "res[k] = mc" in GoLang code

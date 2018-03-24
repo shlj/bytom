@@ -20,7 +20,7 @@ func Hash(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
 	return res
 }
 
-func Tester() {
+func main() {
 	tests := []struct {
 		blockHeader [32]byte
 		seed        [32]byte
@@ -129,12 +129,16 @@ func Tester() {
 	}
 
 	for i, tt := range tests {
+		fmt.Printf("Test case %d:\n", i+1)
+		
 		result := Hash(tt.blockHeader, tt.seed)
 
 		if !reflect.DeepEqual(result, tt.hash) {
-			fmt.Printf("hash %d mismatch: gets %x, expects %x\n", i, result, tt.hash)
+			fmt.Printf("\tFAIL\n")
+			fmt.Printf("\tGets\t%x\n", result)
+			fmt.Printf("\tExpects\t%x\n", tt.hash)
 		} else {
-			fmt.Printf("hash %d PASS\n", i)
+			fmt.Printf("\tPASS\n")
 		}
 	}
 }
