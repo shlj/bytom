@@ -1,7 +1,7 @@
 package main
 
 // #cgo CFLAGS: -I.
-// #cgo LDFLAGS: -lstdc++ -lts
+// #cgo LDFLAGS: -lts -lstdc++
 // #include "cSimdTs.h"
 import "C"
 
@@ -21,7 +21,7 @@ func Hash(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
 	return res
 }
 
-func main() {
+func Tester() {
 	tests := []struct {
 		blockHeader [32]byte
 		seed        [32]byte
