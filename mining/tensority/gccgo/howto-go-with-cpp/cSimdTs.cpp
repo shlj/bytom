@@ -1,22 +1,36 @@
 #include <iostream>
 #include <cstdio>
+#include <map>
 #include "cSimdTs.h"
 #include "BytomPoW.h"
 #include "seed.h"
 
-BytomMatList16* matList_int16;
+using namespace std;
+
+BytomMatList16 matList_int16;
 uint8_t result[32] = {0};
+map <vector<uint8_t>, BytomMatList16> seedCache;
 
 uint8_t *SimdTs(uint8_t blockheader[32], uint8_t seed[32]){
-    uint32_t exted[32];
-    extend(exted, seed); // extends seed to exted
-    Words32 extSeed;
-    init_seed(extSeed, exted);
+    vector<uint8_t> seedVec(seed, seed + 32);
 
-    matList_int16 = new BytomMatList16;
-    matList_int16->init(extSeed);
+    if(seedCache.find(seedVec) != seedCache.end()) {
+        printf("%s\n", "Already existed!");
+        matList_int16 = seedCache[seedVec];
+    } else {
+        uint32_t exted[32];
+        extend(exted, seed); // extends seed to exted
+        Words32 extSeed;
+        init_seed(extSeed, exted);
+
+        // matList_int16 = new BytomMatList16;
+        // matList_int16->init(extSeed);
+        matList_int16.init(extSeed);
+
+        seedCache.insert(pair<vector<uint8_t>, BytomMatList16>(seedVec, matList_int16));
+    }
 
     iter_mineBytom(blockheader, 32, result);
-
-	return result;
+    
+    return result;
 }

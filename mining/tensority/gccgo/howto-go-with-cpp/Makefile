@@ -4,7 +4,6 @@ TARGET=tensority
 
 $(TARGET): libts.a
 	go build -ldflags "-linkmode external -extldflags -static" $(TARGET).go
-	rm -f *.o *.so
 
 libts.a: cSimdTs.o sha3.o
 	ar rs $@ $^
