@@ -1,5 +1,5 @@
-#ifndef _TENSORITY_H_
-#define _TENSORITY_H_
+#ifndef _C_SIMD_TENSOR_H_
+#define _C_SIMD_TENSOR_H_
 
 #ifdef __cplusplus
 extern "C" {

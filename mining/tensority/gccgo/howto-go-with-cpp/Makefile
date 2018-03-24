@@ -6,7 +6,7 @@ $(TARGET): libts.a
 	go build -ldflags "-linkmode external -extldflags -static" $(TARGET).go
 	rm -f *.o *.so
 
-libts.a: tensority.o sha3.o
+libts.a: cSimdTs.o sha3.o
 	ar rs $@ $^
 
 %.o: %.cpp
