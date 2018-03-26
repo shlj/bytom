@@ -1,6 +1,6 @@
 .PHONY: clean
 
-TARGET=cSimdTs
+TARGET=tensority
 
 LIBS=
 UNAME := $(shell uname -s)
@@ -10,9 +10,11 @@ else
 	LIBS += lib.so
 endif
 
-$(TARGET).so: cSimdTs.cpp
-	clang++ -shared -o $@ $^ -std=c++11 -pthread -mavx2 -O3 -fPIC
+$(TARGET): cSimdTs.o
 	cd .. && go test 
+
+%.o: %.cpp
+	clang++ -o $@ -c $^ -std=c++11 -pthread -mavx2 -O3 -fPIC
 
 clean:
 	rm -f *.o *.so *.a
