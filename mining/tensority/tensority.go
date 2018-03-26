@@ -7,13 +7,19 @@ import "C"
 
 import(
     "unsafe"
+
+    "github.com/bytom/protocol/bc"
 )
 
-func Hash(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
-    bhPtr := (*C.uchar)(unsafe.Pointer(&blockHeader))
-    seedPtr := (*C.uchar)(unsafe.Pointer(&seed))
+func Hash(blockHeader, seed *bc.Hash) *bc.Hash {
+    bhBytes := blockHeader.Bytes()
+    sdBytes := seed.Bytes()
+
+    bhPtr := (*C.uchar)(unsafe.Pointer(&bhBytes[0]))
+    seedPtr := (*C.uchar)(unsafe.Pointer(&sdBytes[0]))
 
     resPtr := C.SimdTs(bhPtr, seedPtr)
-    res := *(*[32]uint8)(unsafe.Pointer(resPtr))
-    return res
+    
+    res := bc.NewHash(*(*[32]byte)(unsafe.Pointer(resPtr)))
+    return &res
 }

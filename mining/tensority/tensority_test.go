@@ -5,6 +5,8 @@ import (
     "testing"
     "fmt"
     "time"
+
+    "github.com/bytom/protocol/bc"
 )
 
 // Tests that tensority hash result is correct.
@@ -141,13 +143,17 @@ func TestHash(t *testing.T) {
         fmt.Printf("Test case %d:\n", i+1)
 
         sT := time.Now()
-        result := Hash(tt.blockHeader, tt.seed)
+        bhhash := bc.NewHash(tt.blockHeader)
+        sdhash := bc.NewHash(tt.seed)
+        result := Hash(&bhhash, &sdhash).Bytes()
+        var resArr [32]byte
+        copy(resArr[:], result)
         eT := time.Now()
         fmt.Println("\tTotal verification time:", eT.Sub(sT))
 
-        if !reflect.DeepEqual(result, tt.hash) {
+        if !reflect.DeepEqual(resArr, tt.hash) {
             t.Errorf("\tFAIL\n")
-            t.Errorf("\tGets\t%x\n", result)
+            t.Errorf("\tGets\t%x\n", resArr)
             t.Errorf("\tExpects\t%x\n", tt.hash)
         } else {
             fmt.Printf("\tPASS\n")
