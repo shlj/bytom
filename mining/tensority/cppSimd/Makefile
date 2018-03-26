@@ -14,6 +14,7 @@ $(TARGET):
 	# clang++ -o loadlib.o -c loadlib.cpp -std=c++11 -pthread -mavx2 -O3 -fPIC
 	# ar rs loadlib.a loadlib.o
 	# go run -ldflags "-linkmode external -extldflags -static" so.go
+	# clang++ -shared -o cSimdTs.so cSimdTs.cpp sha3.c byte_order.c -std=c++11 -pthread -mavx2 -O3 -fPIC
 	clang++ -shared -o cSimdTs.so cSimdTs.cpp -std=c++11 -pthread -mavx2 -O3 -fPIC
 	go run so.go
 

@@ -12,17 +12,15 @@ typedef uint8_t* (*CSIMDTS_FUNC)(uint8_t*, uint8_t*, uint8_t*);
 #define LINUX_LIB_CSIMDTS_PATH "./cSimdTs.so"
 
 int linux_csimdts(uint8_t blockheader[32], uint8_t seed[32], uint8_t res[32]){
-    printf("---------xxx---------\n");
-
     void *handle;
     char *error;
     CSIMDTS_FUNC csimdts_func = NULL;
 
     //open the dynamic lib
-    handle = dlopen(LINUX_LIB_CSIMDTS_PATH, RTLD_LAZY);
+    handle = dlopen(LINUX_LIB_CSIMDTS_PATH, RTLD_NOW);
     if (!handle) {
         fprintf(stderr, "%s\n", dlerror());
-        exit(EXIT_FAILURE);
+        return 1;
     }
 
     // clear previous error
@@ -32,13 +30,13 @@ int linux_csimdts(uint8_t blockheader[32], uint8_t seed[32], uint8_t res[32]){
     csimdts_func = (CSIMDTS_FUNC)dlsym(handle, "SimdTs");
     if ((error = dlerror()) != NULL)  {
         fprintf(stderr, "%s\n", error);
-        exit(EXIT_FAILURE);
+        return 1;
     }
     csimdts_func(blockheader, seed, res);
-    
+
     // close dynamic lib
     dlclose(handle);
-    exit(EXIT_SUCCESS);
+    return 0;
 }
 */
 import "C"
@@ -58,6 +56,7 @@ func Hash(blockHeader [32]uint8, seed [32]uint8) [32]uint8 {
     resPtr := (*C.uchar)(unsafe.Pointer(&res))
 
     C.linux_csimdts(bhPtr, seedPtr, resPtr)
+
     res = *(*[32]uint8)(unsafe.Pointer(resPtr))
     return res
 }

@@ -2,7 +2,7 @@
 #define BYTOMPOW_H
 
 #include "scrypt.h"
-#include "sha3-all.h"
+#include "sha3-allInOne.h"
 #include <iostream>
 #include <assert.h>
 #include <vector>
