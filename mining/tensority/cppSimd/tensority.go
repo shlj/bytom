@@ -1,7 +1,7 @@
-package main
+package tensority
 
 // #cgo CFLAGS: -I.
-// #cgo LDFLAGS: -lts -lstdc++
+// #cgo LDFLAGS: -lstdc++ -lts
 // #include "cSimdTs.h"
 import "C"
 
