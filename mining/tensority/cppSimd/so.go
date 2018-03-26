@@ -7,7 +7,7 @@ package main
 #include <stdlib.h>
 #include <dlfcn.h>
 
-typedef int (*CAC_FUNC)(int, int);
+typedef int (*CSIMDTS_FUNC)(int, int);
 #define LINUX_LIB_CSIMDTS_PATH "./cSimdTs.so"
 
 int linux_csimdts() {
@@ -15,36 +15,30 @@ int linux_csimdts() {
 
     void *handle;
     char *error;
-    CAC_FUNC cac_func = NULL;
+    CSIMDTS_FUNC csimdts_func = NULL;
 
-    //打开动态链接库
+    //open the dynamic lib
     handle = dlopen(LINUX_LIB_CSIMDTS_PATH, RTLD_LAZY);
     if (!handle) {
-    fprintf(stderr, "%s\n", dlerror());
-    exit(EXIT_FAILURE);
+        fprintf(stderr, "%s\n", dlerror());
+        exit(EXIT_FAILURE);
     }
 
-    //clear previous error
+    // clear previous error
     dlerror();
 
-    //获取一个函数
-    *(void **) (&cac_func) = dlsym(handle, "add");
+    // get the func
+    *(void **) (&csimdts_func) = dlsym(handle, "add");
     if ((error = dlerror()) != NULL)  {
-    fprintf(stderr, "%s\n", error);
-    exit(EXIT_FAILURE);
+        fprintf(stderr, "%s\n", error);
+        exit(EXIT_FAILURE);
     }
-    printf("add: %d\n", (*cac_func)(2,7));
+    printf("add: %d\n", (*csimdts_func)(2,7));
 
-    cac_func = (CAC_FUNC)dlsym(handle, "sub");
-    printf("sub: %d\n", cac_func(9,2));
+    csimdts_func = (CSIMDTS_FUNC)dlsym(handle, "sub");
+    printf("sub: %d\n", csimdts_func(9,2));
 
-    cac_func = (CAC_FUNC)dlsym(handle, "mul");
-    printf("mul: %d\n", cac_func(3,2));
-
-    cac_func = (CAC_FUNC)dlsym(handle, "div");
-    printf("div: %d\n", cac_func(8,2));
-
-    //关闭动态链接库
+    // close dynamic lib
     dlclose(handle);
     exit(EXIT_SUCCESS);
 }
