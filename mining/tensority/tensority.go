@@ -15,6 +15,7 @@ func Hash(blockHeader, seed *bc.Hash) *bc.Hash {
     bhBytes := blockHeader.Bytes()
     sdBytes := seed.Bytes()
 
+    // Get thearray pointer from the corresponding slice
     bhPtr := (*C.uchar)(unsafe.Pointer(&bhBytes[0]))
     seedPtr := (*C.uchar)(unsafe.Pointer(&sdBytes[0]))
 
