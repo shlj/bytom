@@ -8,10 +8,12 @@
 using namespace std;
 
 BytomMatList16* matList_int16;
-uint8_t result[32] = {0};
+// uint8_t result[32] = {0};
+uint8_t *result;
 map <vector<uint8_t>, BytomMatList16*> seedCache;
 
-uint8_t *SimdTs(uint8_t blockheader[32], uint8_t seed[32]){
+uint8_t *SimdTs(uint8_t blockheader[32], uint8_t seed[32], uint8_t res[32]){
+    result = res;
     vector<uint8_t> seedVec(seed, seed + 32);
 
     if(seedCache.find(seedVec) != seedCache.end()) {
