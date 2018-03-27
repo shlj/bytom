@@ -39,6 +39,7 @@ all: test target release-all
 
 bytomd:
 	@echo "Building bytomd to cmd/bytomd/bytomd"
+	@clang++ -o mining/tensority/lib/cSimdTs.o -c mining/tensority/lib/cSimdTs.cpp -std=c++11 -pthread -mavx2 -O3 -fPIC
 	@go build -ldflags "-X github.com/bytom/version.GitCommit=`git rev-parse HEAD`" \
     -o cmd/bytomd/bytomd cmd/bytomd/main.go
 
@@ -78,6 +79,7 @@ release-all: clean
 
 clean:
 	rm -rf target
+	rm mining/tensority/lib/cSimdTs.o
 
 target/$(BYTOMD_BINARY32):
 	CGO_ENABLED=0 GOARCH=386 go build $(BUILD_FLAGS) -o $@ cmd/bytomd/main.go
