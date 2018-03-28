@@ -1,13 +1,18 @@
 #ifndef BYTOMPOW_H
 #define BYTOMPOW_H
 
-#include "scrypt.h"
-#include "sha3-allInOne.h"
 #include <iostream>
-#include <assert.h>
 #include <vector>
 #include <stdint.h>
-#include <x86intrin.h>
+#include <assert.h>
+#include <time.h>
+#ifdef MS
+    #include <intrin.h>
+#else
+    #include <x86intrin.h>
+#endif
+#include "scrypt.h"
+#include "sha3-allInOne.h"
 
 #define FNV(v1,v2) int32_t( ((v1)*FNV_PRIME) ^ (v2) )
 const int FNV_PRIME = 0x01000193;
