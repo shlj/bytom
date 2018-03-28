@@ -39,7 +39,7 @@ all: test target release-all
 
 bytomd:
 	@echo "Building bytomd to cmd/bytomd/bytomd"
-	@clang++ -o mining/tensority/lib/cSimdTs.o -c mining/tensority/lib/cSimdTs.cpp -std=c++11 -pthread -mavx2 -O3 -fPIC
+	@g++ -o mining/tensority/lib/cSimdTs.o -c mining/tensority/lib/cSimdTs.cpp -std=c++11 -pthread -mavx2 -O3 -fPIC
 	@go build -ldflags "-X github.com/bytom/version.GitCommit=`git rev-parse HEAD`" \
     -o cmd/bytomd/bytomd cmd/bytomd/main.go
 
