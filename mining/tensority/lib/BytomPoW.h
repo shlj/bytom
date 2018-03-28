@@ -6,11 +6,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include <time.h>
-#ifdef MS
-    #include <intrin.h>
-#else
-    #include <x86intrin.h>
-#endif
+#include <x86intrin.h>
 #include "scrypt.h"
 #include "sha3-allInOne.h"
 
