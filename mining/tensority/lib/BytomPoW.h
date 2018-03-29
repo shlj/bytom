@@ -4,8 +4,9 @@
 #include "scrypt.h"
 #include "sha3-allInOne.h"
 #include <iostream>
-#include <assert.h>
 #include <vector>
+#include <time.h>
+#include <assert.h>
 #include <stdint.h>
 #include <x86intrin.h>
 #include <omp.h>
