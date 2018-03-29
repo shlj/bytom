@@ -353,7 +353,7 @@ static inline void iter_mineBytom(
     clock_t start, end;
     start = clock();
     // Itz faster using single thread ...
-#ifdef _OPENMP
+#ifdef _USE_OPENMP
 #pragma omp parallel for
 #endif
     for(int k=0; k<4; k++) { // The k-loop
