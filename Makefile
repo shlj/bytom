@@ -9,11 +9,6 @@ $(error "$$GOOS is not defined.")
 endif
 endif
 
-flagPIC := 
-ifneq ($(GOOS),windows)
-	flagPIC += -fPIC
-endif
-
 # flagOpenMP := -fopenmp -D_USE_OPENMP
 
 PACKAGES    := $(shell go list ./... | grep -v '/vendor/')
@@ -46,7 +41,7 @@ all: test target release-all
 
 bytomd:
 	@echo "Building bytomd to cmd/bytomd/bytomd"
-	@g++ -o mining/tensority/lib/cSimdTs.o -c mining/tensority/lib/cSimdTs.cpp -std=c++11 -pthread -mavx2 -O3 $(flagPIC) $(flagOpenMP)
+	@g++ -o mining/tensority/lib/cSimdTs.o -c mining/tensority/lib/cSimdTs.cpp -std=c++11 -pthread -mavx2 -O3 $(flagOpenMP)
 	@go build -ldflags "-X github.com/bytom/version.GitCommit=`git rev-parse HEAD`" \
     -o cmd/bytomd/bytomd cmd/bytomd/main.go
 
