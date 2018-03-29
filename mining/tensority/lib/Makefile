@@ -14,7 +14,7 @@ $(TARGET): cSimdTs.o
 	cd .. && go test 
 
 %.o: %.cpp
-	g++ -o $@ -c $^ -std=c++11 -pthread -mavx2 -O3 -fPIC
+	g++ -o $@ -c $^ -std=c++11 -pthread -mavx2 -O3 -fPIC -fopenmp 
 
 clean:
 	rm -f *.o *.so *.a

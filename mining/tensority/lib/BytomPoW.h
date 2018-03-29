@@ -8,6 +8,7 @@
 #include <vector>
 #include <stdint.h>
 #include <x86intrin.h>
+#include <omp.h>
 
 #define FNV(v1,v2) int32_t( ((v1)*FNV_PRIME) ^ (v2) )
 const int FNV_PRIME = 0x01000193;
@@ -347,15 +348,16 @@ static inline void iter_mineBytom(
                         uint32_t len,
                         // uint8_t nonce[8],
                         uint8_t result[32]) {
-    Mat256x256i16 *mat16=new Mat256x256i16;
-    Mat256x256i16 *tmp16=new Mat256x256i16;
     Mat256x256i8 *resArr8=new Mat256x256i8[4];
-    sha3_ctx *ctx = new sha3_ctx;
 
     clock_t start, end;
     start = clock();
     // Itz faster using single thread ...
+    #pragma omp parallel for
     for(int k=0; k<4; k++) { // The k-loop
+        sha3_ctx *ctx = new sha3_ctx;
+        Mat256x256i16 *mat16=new Mat256x256i16;
+        Mat256x256i16 *tmp16=new Mat256x256i16;
         uint8_t sequence[32];
         rhash_sha3_256_init(ctx);
         rhash_sha3_update(ctx, fixedMessage+(len*k/4), len/4);//分四轮消耗掉fixedMessage
@@ -373,6 +375,9 @@ static inline void iter_mineBytom(
         }
         // "res[k] = mc" in GoLang code
         tmp16->toMatI8(resArr8[k]); // 0.00018s
+        delete mat16;
+        delete tmp16;
+        delete ctx;
     }
 
     // 3.7e-05s
@@ -388,13 +393,12 @@ static inline void iter_mineBytom(
 
     Arr256x64i32 arr(*res8);
     arr.reduceFNV();
+    sha3_ctx *ctx = new sha3_ctx;
     rhash_sha3_256_init(ctx);
     rhash_sha3_update(ctx, arr.d0RawPtr(), 256);
     rhash_sha3_final(ctx, result);
 
     delete res8;
-    delete mat16;
-    delete tmp16;
     delete[] resArr8;
     delete ctx;
 }
