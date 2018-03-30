@@ -355,7 +355,7 @@ static inline void iter_mineBytom(
     start = clock();
     // Itz faster using single thread ...
 #ifdef _USE_OPENMP
-#pragma omp parallel for
+#pragma omp parallel for simd
 #endif
     for(int k=0; k<4; k++) { // The k-loop
         sha3_ctx *ctx = new sha3_ctx;
