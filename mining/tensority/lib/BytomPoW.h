@@ -390,9 +390,9 @@ static inline void iter_mineBytom(
     res8->add(*res8, resArr8[3]);
 
     end = clock();
-    std::cout << "\tTime for getting MulMatix: "
-              << (double)(end - start) / CLOCKS_PER_SEC << "s"
-              << std::endl;
+    // std::cout << "\tTime for getting MulMatix: "
+    //           << (double)(end - start) / CLOCKS_PER_SEC << "s"
+    //           << std::endl;
 
     Arr256x64i32 arr(*res8);
     arr.reduceFNV();

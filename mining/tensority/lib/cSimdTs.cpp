@@ -15,7 +15,7 @@ uint8_t *SimdTs(uint8_t blockheader[32], uint8_t seed[32]){
     vector<uint8_t> seedVec(seed, seed + 32);
 
     if(seedCache.find(seedVec) != seedCache.end()) {
-        printf("\t---%s---\n", "Seed already exists in the cache.");
+        // printf("\t---%s---\n", "Seed already exists in the cache.");
         matList_int16 = seedCache[seedVec];
     } else {
         uint32_t exted[32];
