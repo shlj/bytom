@@ -9,7 +9,10 @@
 #include <assert.h>
 #include <stdint.h>
 #include <x86intrin.h>
-#include <omp.h>
+#ifdef _USE_OPENMP
+    #include <omp.h>
+#endif
+
 
 #define FNV(v1,v2) int32_t( ((v1)*FNV_PRIME) ^ (v2) )
 const int FNV_PRIME = 0x01000193;

@@ -10,6 +10,9 @@ endif
 endif
 
 MUL_CORE := -fopenmp -D_USE_OPENMP
+ifeq ($(GOOS),darwin)
+	MUL_CORE := 
+endif	
 
 PACKAGES    := $(shell go list ./... | grep -v '/vendor/')
 BUILD_FLAGS := -ldflags "-X github.com/bytom/version.GitCommit=`git rev-parse HEAD`"
@@ -81,7 +84,7 @@ release-all: clean
 
 clean:
 	rm -rf target
-	rm mining/tensority/lib/cSimdTs.o
+	rm -rf mining/tensority/lib/cSimdTs.o
 
 target/$(BYTOMD_BINARY32):
 	CGO_ENABLED=0 GOARCH=386 go build $(BUILD_FLAGS) -o $@ cmd/bytomd/main.go
