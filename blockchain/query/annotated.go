@@ -26,10 +26,11 @@ type AnnotatedInput struct {
 	Type            string             `json:"type"`
 	AssetID         bc.AssetID         `json:"asset_id"`
 	AssetAlias      string             `json:"asset_alias,omitempty"`
-	AssetDefinition *json.RawMessage   `json:"asset_definition"`
+	AssetDefinition *json.RawMessage   `json:"asset_definition,omitempty"`
 	Amount          uint64             `json:"amount"`
 	IssuanceProgram chainjson.HexBytes `json:"issuance_program,omitempty"`
-	ControlProgram  chainjson.HexBytes `json:"-"`
+	ControlProgram  chainjson.HexBytes `json:"control_program,omitempty"`
+	Address         string             `json:"address,omitempty"`
 	SpentOutputID   *bc.Hash           `json:"spent_output_id,omitempty"`
 	AccountID       string             `json:"account_id,omitempty"`
 	AccountAlias    string             `json:"account_alias,omitempty"`
@@ -44,11 +45,12 @@ type AnnotatedOutput struct {
 	Position        int                `json:"position"`
 	AssetID         bc.AssetID         `json:"asset_id"`
 	AssetAlias      string             `json:"asset_alias,omitempty"`
-	AssetDefinition *json.RawMessage   `json:"asset_definition"`
+	AssetDefinition *json.RawMessage   `json:"asset_definition,omitempty"`
 	Amount          uint64             `json:"amount"`
 	AccountID       string             `json:"account_id,omitempty"`
 	AccountAlias    string             `json:"account_alias,omitempty"`
 	ControlProgram  chainjson.HexBytes `json:"control_program"`
+	Address         string             `json:"address,omitempty"`
 }
 
 //AnnotatedAccount means an annotated account.
